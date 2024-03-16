@@ -34,7 +34,8 @@ class Usercontroller extends Controller
             'password'=>Hash::make($request->password),
            
         ]);
-        return response()->json('Regester Done');
+        return $this->apiResponse('Regester Done', true, null, 200);
+
 
     }
 
@@ -42,7 +43,7 @@ class Usercontroller extends Controller
     {
         $user=User::where('email',$request->email)->first();
         if(!hash::check($request->password,$user->password)){
-            return response()->json('Regester faild');
+            return $this->apiResponse([], true, 'regester faild', 500);
 
         }
         else{
@@ -62,8 +63,8 @@ class Usercontroller extends Controller
            $user->tokens()->delete();
             return $this->apiResponse([], true, null, 200);
           }else {
-                return 'ok';
-            }
+            return $this->apiResponse([], true, 'logout faild', 200) ;
+                              }
 
     }
 
