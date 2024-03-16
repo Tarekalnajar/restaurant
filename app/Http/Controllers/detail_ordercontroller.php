@@ -51,9 +51,7 @@ class detail_ordercontroller extends Controller
     {
         if($request->isMethod('post')){
 
-        $qun=$request->quantity;
-        $price=$request->price;
-        $total=$qun*$price;
+
 
         $validato=Validator::make($request->all(),[
             'menu_id'=>'required|exists:menus,id',
@@ -65,7 +63,9 @@ class detail_ordercontroller extends Controller
          {
           return $this->requiredField($validato->errors());
          }
-
+         $qun=$request->quantity;
+         $price=$request->price;
+         $total=$qun*$price;
          $d_order=detail_order::find($id);
          $d_order->menu_id=$request->menu_id;
          $d_order->quantity=$request->quantity;
